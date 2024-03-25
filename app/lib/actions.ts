@@ -3,8 +3,9 @@
 import { z } from 'zod';
 import axios from 'axios';
 import {redirect} from "next/navigation";
+import {signIn} from "@/auth"
 
-export type State = {
+export type RegisterState = {
     errors?: {
         name?: string[];
         email?: string[];
@@ -12,9 +13,15 @@ export type State = {
     };
     message?: string | null;
 };
+export type LoginState = {
+    errors?: {
+        email?: string[];
+        password?: string[];
+    };
+    message?: string | null;
+};
 
-
-const FormSchema = z.object({
+const Register = z.object({
     name: z.string({
         invalid_type_error:"Please enter a valid user name."
     }).max(30,"User name must not exceed more than 30 characters.").min(3,"User name must have at least 3 characters."),
@@ -26,10 +33,16 @@ const FormSchema = z.object({
     }).min(4,"Password must have at least 4 characters.").max(30,"Password shouldn't exceed 30 characters.")
 });
 
-const Register = FormSchema;
+const Login = z.object({
+    email: z.string({
+        invalid_type_error:"Please enter a valid email."
+    }).email("Email is not valid."),
+    password: z.string({
+        invalid_type_error:"Please enter a valid password."
+    })
+});
 
-
-export async function register(prevState: State, formData: FormData):Promise<State> {
+export async function register(prevState: RegisterState, formData: FormData):Promise<RegisterState> {
 
     const validatedFields = Register.safeParse({
         name: formData.get('name'),
@@ -64,4 +77,34 @@ export async function register(prevState: State, formData: FormData):Promise<Sta
     }
 
     redirect('/login');
+}
+
+export async function login(prevState: LoginState, formData: FormData):Promise<LoginState> {
+
+    const validatedFields = Login.safeParse({
+        email: formData.get('email'),
+        password: formData.get('password'),
+    });
+
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Login User.',
+        };
+    }
+    try{
+        // const response = await axios.post(`${process.env.API_URL}/auth/login`,validatedFields.data)
+        // if(response.status!==200){
+        //     return {
+        //         message: 'Error logging in user.'
+        //     };
+        // }
+    }catch (error) {
+        return {
+            message: 'Error logging in user.'
+        };
+    }
+
+    redirect('/home');
 }

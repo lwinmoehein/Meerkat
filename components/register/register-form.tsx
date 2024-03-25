@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
 import React from 'react';
 import {register} from "@/app/lib/actions";
 import { useFormState } from 'react-dom';
-import {Flex,Card,Heading,Box,Link,TextField,Button,Text,Callout} from "@radix-ui/themes";
+import {Flex,Card,Heading,Box,Link,TextField,Button,Text} from "@radix-ui/themes";
 import {Form} from "@radix-ui/react-form";
-import {ExclamationTriangleIcon} from "@radix-ui/react-icons";
+import { auth } from "@/auth"
 
-export default function FormDemo() {
+export default function RegisterForm() {
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(register, initialState);
 
@@ -70,7 +70,7 @@ export default function FormDemo() {
            </Box>
 
            <Flex mt="6" justify="between" gap="3">
-               <Link underline={"always"} href={"/login"}>
+               <Link underline={"always"} href={"/api/auth/signin"}>
                        Sign In
                </Link>
                <Button  variant={"soft"} type={"submit"} >Register</Button>
