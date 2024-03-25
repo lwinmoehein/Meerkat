@@ -3,9 +3,9 @@
 import React from 'react';
 import {register} from "@/app/lib/actions";
 import { useFormState } from 'react-dom';
-import {Flex,Card,Heading,Box,TextField,Button,Text} from "@radix-ui/themes";
-import Link from "next/link";
+import {Flex,Card,Heading,Box,Link,TextField,Button,Text,Callout} from "@radix-ui/themes";
 import {Form} from "@radix-ui/react-form";
+import {ExclamationTriangleIcon} from "@radix-ui/react-icons";
 
 export default function FormDemo() {
     const initialState = { message: null, errors: {} };
@@ -18,7 +18,6 @@ export default function FormDemo() {
            <Heading as="h3" size="6" trim="start" mb="5">
                Sign up
            </Heading>
-
            <Box mb="3">
                <Flex mb="1">
                    <Text as="label" htmlFor="example-email-field" size="2" weight="bold">
@@ -62,7 +61,7 @@ export default function FormDemo() {
                <TextField.Root
                     name={"password"}
                    placeholder="Enter your password"
-                   id="example-password-field"
+                    type={"password"}
                />
                {state.errors?.password &&
                    state.errors.password.map((error: string,index) => (
@@ -70,11 +69,11 @@ export default function FormDemo() {
                    ))}
            </Box>
 
-           <Flex mt="6" justify="end" gap="3">
-               <Button  variant="outline">
-                   Sign In
-               </Button>
-               <Button type={"submit"} >Register</Button>
+           <Flex mt="6" justify="between" gap="3">
+               <Link underline={"always"} href={"/login"}>
+                       Sign In
+               </Link>
+               <Button  variant={"soft"} type={"submit"} >Register</Button>
            </Flex>
        </Card>
        </Box>

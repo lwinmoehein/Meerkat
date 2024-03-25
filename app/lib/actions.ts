@@ -49,11 +49,17 @@ export async function register(prevState: State, formData: FormData):Promise<Sta
         if(response.status!==201){
             return {
                 message: 'Error creating user.',
+                errors:{
+                    email:["Email already taken."]
+                }
             };
         }
     }catch (error) {
         return {
             message: 'Error creating user.',
+            errors:{
+                email:["Email already taken."]
+            }
         };
     }
 
