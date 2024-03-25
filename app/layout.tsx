@@ -10,7 +10,7 @@ export default function RootLayout({children}: Readonly<{
     return (
         <html>
         <body>
-        <Theme accentColor="red">
+        <Theme accentColor="green">
             <div>
 
                 <NavBar/>
