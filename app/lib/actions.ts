@@ -113,6 +113,23 @@ export async function login(prevState: LoginState, formData: FormData):Promise<L
     redirect('/');
 }
 
+export async function getJobs(){
+    try{
+        const token = cookies().get("access_token")
+
+        const { data,status } = await axios.get(`${process.env.API_URL}/jobs`,{
+            headers:{
+                'Authorization':`Bearer ${token?.value}`
+            }
+        })
+        if (status===200) {
+            const jobs:Job[] = data.data
+            return jobs;
+        }
+    }catch (error) {
+        return null;
+    }
+}
 export async function getToken(){
     const token = cookies().get("access_token")
     return token?.value

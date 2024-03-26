@@ -1,19 +1,16 @@
 
 import '@radix-ui/themes/styles.css'
-import {getToken, getUser} from "@/app/lib/actions";
+import {getJobs, getToken, getUser} from "@/app/lib/actions";
 
 
 export default async function Page() {
-    const token = await getToken()
-    const user = await  getUser()
-
-
+    const jobs = await getJobs()
 
   return(
       <div>
-        {token&&<pre>{JSON.stringify(token)}</pre>}
-          <hr/>
-          {user&&<pre>{user.email}</pre>}
+          {jobs&& jobs.map((job,index)=>
+              <span key={index}>{job.name}</span>
+          )}
       </div>
   )
 }
