@@ -9,7 +9,7 @@ export default async function Page() {
     const jobs = await getJobs()
 
   return(
-      <Box p={"2"}>
+      <Box  p={"2"}>
                   <Flex justify={'between'}>
                       <Heading mb={"4"}>
                           Jobs

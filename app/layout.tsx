@@ -12,20 +12,9 @@ export default function RootLayout({children}: Readonly<{
         <html>
         <body>
         <Theme accentColor="green" appearance={"dark"}>
-            <div>
-
-                <NavBar/>
-                <main>
                     {children}
-                </main>
-
-                <footer>
-
-                </footer>
-            </div>
         </Theme>
         </body>
         </html>
-    )
-        ;
+    );
 }
