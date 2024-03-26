@@ -1,22 +1,16 @@
+"use client";
 
 import React from 'react';
 import {Flex,Card,Heading,Box,Link,TextField,Button,Text} from "@radix-ui/themes";
 import {Form} from "@radix-ui/react-form";
 import {login} from '@/app/lib/actions';
 import {useFormState} from "react-dom";
-import {GetServerSidePropsContext, InferGetServerSidePropsType} from "next";
-import {getCsrfToken} from "next-auth/react";
-
-export default async function LoginForm() {
+export default  function LoginForm() {
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(login, initialState);
 
-    const csrfToken = await getCsrfToken()
-
     return (
-        <Form method="post" action="/api/auth/callback/credentials">
-            <input name="csrfToken" type="hidden" defaultValue={csrfToken}/>
-
+        <Form action={dispatch}>
             <Box width={{sm: '100vw', md: 'maxWidth'}}>
                 <Card size="4">
                     <Heading as="h3" size="6" trim="start" mb="5">
@@ -33,7 +27,7 @@ export default async function LoginForm() {
                             placeholder="Enter your email"
                             id="example-email-field"
                         />
-                        {state.errors?.email &&
+                        {state&&state.errors?.email &&
                             state.errors.email.map((error: string, index) => (
                                 <Text key={index} size={"1"} color="red">{error}</Text>
                             ))}
@@ -50,7 +44,7 @@ export default async function LoginForm() {
                             placeholder="Enter your password"
                             type={"password"}
                         />
-                        {state.errors?.password &&
+                        {state&&state.errors?.password &&
                             state.errors.password.map((error: string, index) => (
                                 <Text key={index} size={"1"} color="red">{error}</Text>
                             ))}

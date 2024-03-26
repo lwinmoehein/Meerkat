@@ -5,7 +5,6 @@ import {register} from "@/app/lib/actions";
 import { useFormState } from 'react-dom';
 import {Flex,Card,Heading,Box,Link,TextField,Button,Text} from "@radix-ui/themes";
 import {Form} from "@radix-ui/react-form";
-import { auth } from "@/auth"
 
 export default function RegisterForm() {
     const initialState = { message: null, errors: {} };
@@ -70,7 +69,7 @@ export default function RegisterForm() {
            </Box>
 
            <Flex mt="6" justify="between" gap="3">
-               <Link underline={"always"} href={"/api/auth/signin"}>
+               <Link underline={"always"} href={"/login"}>
                        Sign In
                </Link>
                <Button  variant={"soft"} type={"submit"} >Register</Button>

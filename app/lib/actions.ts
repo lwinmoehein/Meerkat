@@ -3,7 +3,9 @@
 import { z } from 'zod';
 import axios from 'axios';
 import {redirect} from "next/navigation";
-import {signIn} from "@/auth"
+import jwt from 'next-auth/jwt'
+import {cookies} from "next/headers";
+
 
 export type RegisterState = {
     errors?: {
@@ -94,17 +96,32 @@ export async function login(prevState: LoginState, formData: FormData):Promise<L
         };
     }
     try{
-        // const response = await axios.post(`${process.env.API_URL}/auth/login`,validatedFields.data)
-        // if(response.status!==200){
-        //     return {
-        //         message: 'Error logging in user.'
-        //     };
-        // }
+        const { data,status } = await axios.post(`${process.env.API_URL}/auth/login`,validatedFields.data)
+        if (status===200) {
+            const user = data.user
+            const token = data.token
+
+            cookies().set('access_token', token)
+            cookies().set('user', JSON.stringify(user))
+        }
     }catch (error) {
         return {
             message: 'Error logging in user.'
         };
     }
 
-    redirect('/home');
+    redirect('/');
+}
+
+export async function getToken(){
+    const token = cookies().get("access_token")
+    return token?.value
+}
+export async function getUser(){
+    const user = cookies().get("user")
+    return user==undefined?null:JSON.parse(user.value)
+}
+export async function signOut(){
+    cookies().set('access_token', "")
+    cookies().set('user', JSON.stringify(""))
 }
