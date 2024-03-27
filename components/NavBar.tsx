@@ -1,8 +1,9 @@
 "use client";
 
-import {HomeIcon, PersonIcon} from "@radix-ui/react-icons";
-import {usePathname} from "next/navigation";
-import {Flex, Heading, TabNav} from "@radix-ui/themes";
+import {ExitIcon, HomeIcon, PersonIcon} from "@radix-ui/react-icons";
+import {redirect, usePathname, useRouter} from "next/navigation";
+import {DropdownMenu, Flex, Heading, TabNav} from "@radix-ui/themes";
+import {signOut} from "@/app/lib/actions";
 
 
 const links = [
@@ -19,6 +20,12 @@ const links = [
 
 export default function NavBar(){
     const pathname = usePathname()
+    const router = useRouter()
+
+    const logOut = async () => {
+        await signOut()
+        router.replace("/login")
+    }
 
     const linkItems = links.map((link,index) =>
         <TabNav.Link key={index} href={link.href} active={link.href===pathname}>
@@ -29,7 +36,14 @@ export default function NavBar(){
         <Flex direction={'column'}>
             <Flex p={'2'} maxHeight={'80px'} justify={'between'} align={'center'}>
                 <Heading>Meerkat</Heading>
-                <PersonIcon/>
+                <DropdownMenu.Root>
+                    <DropdownMenu.Trigger>
+                        <PersonIcon/>
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                        <DropdownMenu.Item onClick={logOut} color={'red'}>Log Out <ExitIcon/></DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                </DropdownMenu.Root>
             </Flex>
             <TabNav.Root>
                 {linkItems}

@@ -66,7 +66,6 @@ export default function AddJobDialog(){
                 <Dialog.Title>Add New Web Page</Dialog.Title>
                 <Dialog.Description size="2" mb="4">
                     Add a new web page to watch changes and get notified.
-                    <pre>{JSON.stringify(state)}</pre>
                 </Dialog.Description>
                 <Form action={dispatch}>
                 <Flex direction="column" gap="3">
