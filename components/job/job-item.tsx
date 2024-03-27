@@ -1,7 +1,7 @@
 "use client";
 
 import {Badge, Box, Card, DropdownMenu, Flex, Text} from "@radix-ui/themes";
-import {DotsVerticalIcon, TrashIcon} from "@radix-ui/react-icons";
+import {CheckCircledIcon, DotsVerticalIcon, MinusCircledIcon, TrashIcon} from "@radix-ui/react-icons";
 import {deleteJob} from "@/app/lib/actions";
 
 
@@ -29,7 +29,19 @@ export default function JobItem({job}:{job:Job}){
                             </DropdownMenu.Content>
                         </DropdownMenu.Root>
                     </Flex>
-                    <Text as="div" size="2" color="gray">
+                    {job.is_active&&(
+                        <Flex gap={'1'} justify={'start'} align={'center'}>
+                            <Text color={'green'} size={'1'}>Active</Text>
+                            <CheckCircledIcon color={'#46A758'}/>
+                        </Flex>
+                    )}
+                    {!job.is_active&&(
+                        <Flex gap={'1'} justify={'start'} align={'center'}>
+                            <Text color={'green'} size={'1'}>Inactive</Text>
+                            <MinusCircledIcon/>
+                        </Flex>
+                    )}
+                    <Text mt={'3'} as="div" size="2" color="gray">
                         {job.url}
                     </Text>
                     <Text as="div" mt={'5'} size="1" color="gray" weight={'bold'}>
