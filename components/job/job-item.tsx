@@ -50,10 +50,12 @@ export default function JobItem({job}:{job:Job}){
                     </Text>
                     <Flex mt={'3'} gap="3" align="center">
                         {job.tags&&job.tags.map((tag,index)=>(
-                            <>
-                                {tag}
+                            <Flex justify={'center'} gap={'3'} align={'center'}  key={index}>
+                                <Text size={'1'} color={'sky'}>
+                                    {tag}
+                                </Text>
                                 {index!==job.tags.length-1&&<Separator orientation="vertical" />}
-                            </>
+                            </Flex>
                         ))}
                     </Flex>
                 </Box>
