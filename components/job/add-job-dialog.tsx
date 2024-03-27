@@ -30,7 +30,7 @@ export default function AddJobDialog(){
     useEffect(() => {
         if(state.message==="Success"){
             setOpen(false)
-
+            setTags([])
         }
     }, [state.message]);
 
@@ -71,18 +71,34 @@ export default function AddJobDialog(){
                 <Form action={dispatch}>
                 <Flex direction="column" gap="3">
                     <label>
-                        <Text as="div" size="2" mb="1" weight="bold">
-                            Name
-                        </Text>
+                        <Flex justify={'between'}>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                Name
+                            </Text>
+                            {state.errors?.name&&state.errors.name.map((error,index)=>
+                                <Text key={index} as="div" color={'red'} size="2" my="1" >
+                                    {error}
+                                </Text>
+                            )}
+                        </Flex>
+
                         <TextField.Root
                             placeholder="Netflix Careers Page"
                             name={'name'}
                         />
                     </label>
                     <label>
-                        <Text as="div" size="2" mb="1" weight="bold">
-                            URL
-                        </Text>
+                        <Flex justify={'between'}>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                URL
+                            </Text>
+                            {state.errors?.url&&state.errors.url.map((error,index)=>
+                                <Text key={index} as="div" color={'red'} size="2" my="1" >
+                                    {error}
+                                </Text>
+                            )}
+                        </Flex>
+
                         <TextField.Root
                             name={'url'}
                             placeholder="https://netflix.com/careers"
@@ -103,9 +119,16 @@ export default function AddJobDialog(){
                             <Button onClick={addToTags}>Add</Button>
                         </Flex>
                     </label>
-                    <Text as="div" size="2" mb="1" weight="bold">
-                        Added Tags
-                    </Text>
+                    <Flex justify={'between'}>
+                        <Text as="div" size="2" mb="1" weight="bold">
+                            Added Tags
+                        </Text>
+                        {state.errors?.tags&&state.errors.tags.map((error,index)=>
+                            <Text key={index} as="div" color={'red'} size="2" my="1" >
+                                {error}
+                            </Text>
+                        )}
+                    </Flex>
                     <Box>
                         <Card>
                             {tags.length>0&&

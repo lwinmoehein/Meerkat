@@ -56,12 +56,16 @@ const Login = z.object({
 
 const CreateJob = z.object({
     name: z.string({
-        invalid_type_error:"Please enter a name for this site."
-    }),
-    url: z.string({
-        invalid_type_error:"Please enter a valid url."
-    }).url(),
-    tags: z.array(z.string())
+        invalid_type_error:"Invalid name",
+        required_error:"Invalid name"
+    }).min(3,"Invalid name").max(30,"Invalid name"),
+    url: z.string().url(
+        "Invalid URL"
+    ).max(255,"Invalid URL"),
+    tags: z.array(z.string().max(255,"Invalid tags"),{
+        invalid_type_error:"Invalid tags",
+        required_error:"Invalid tags"
+    })
 });
 
 export async function createJob(prevState: CreateJobState, formData: FormData):Promise<CreateJobState>{
@@ -76,8 +80,7 @@ export async function createJob(prevState: CreateJobState, formData: FormData):P
 
     if (!validatedFields.success) {
         return {
-            errors: validatedFields.error.flatten().fieldErrors,
-            message: 'Missing Fields. Failed to add a new website.',
+            errors: validatedFields.error.flatten().fieldErrors
         };
     }
     try{
