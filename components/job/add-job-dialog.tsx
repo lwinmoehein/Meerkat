@@ -1,6 +1,6 @@
 "use client";
 
-import {Button, Box, Dialog, Flex, Text, TextField, Badge, Spinner} from "@radix-ui/themes";
+import {Button, Box, Dialog, Flex, Text, TextField, Badge, Spinner, Card} from "@radix-ui/themes";
 import {ArrowRightIcon, CheckIcon, PlusIcon} from "@radix-ui/react-icons";
 import React, {useEffect, useState} from "react";
 import {Form} from "@radix-ui/react-form";
@@ -46,6 +46,7 @@ export default function AddJobDialog(){
 
     const addToTags = (e:any)=>{
         e.preventDefault()
+        if(tag==null || tag=="") return
         setTags(
             [
                 ...tags,
@@ -105,12 +106,25 @@ export default function AddJobDialog(){
                     <Text as="div" size="2" mb="1" weight="bold">
                         Added Tags
                     </Text>
-                    <Flex direction={'row'} gap={'2'}>
-                        {
-                           tagItems
-                        }
-                        <input type={'hidden'} name={'tags'} value={tagsValueString}/>
-                     </Flex>
+                    <Box>
+                        <Card>
+                            {tags.length>0&&
+                                <Flex minHeight={'50px'} direction={'row'} gap={'2'}>
+                                    {
+                                        tagItems
+                                    }
+                                    <input type={'hidden'} name={'tags'} value={tagsValueString}/>
+                                </Flex>
+                            }
+                            {tags.length===0&&
+                                <Flex minHeight={'50px'} justify={'center'} align={'center'}>
+                                    <Text as="div" size="2" mb="1" weight="bold">
+                                        No tags were added yet.
+                                    </Text>
+                                </Flex>
+                            }
+                        </Card>
+                    </Box>
                 </Flex>
 
                 <Flex gap="3" mt="4" justify="center">
