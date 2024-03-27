@@ -1,20 +1,25 @@
 "use client";
 
-import {Button, Box, Dialog, Flex, Text, TextField, Badge} from "@radix-ui/themes";
+import {Button, Box, Dialog, Flex, Text, TextField, Badge, Spinner} from "@radix-ui/themes";
 import {PlusIcon} from "@radix-ui/react-icons";
 import {useEffect, useState} from "react";
 import {Form} from "@radix-ui/react-form";
 import {useFormState} from "react-dom";
 import {createJob} from "@/app/lib/actions";
+import {SubmitButton} from "@/components/submit-button";
+
 
 export default function AddJobDialog(){
 
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(createJob, initialState);
+    const [open, setOpen] = useState(false);
+
 
     const [tags,setTags] = useState<string[]>([])
     const [tagsValueString,setTagsValueString] = useState("")
     const [tag,setTag] = useState("")
+
 
     const tagItems =  tags.map((t,index)=>
         <Box key={index} >
@@ -23,10 +28,20 @@ export default function AddJobDialog(){
     );
 
     useEffect(() => {
+        if(state.message==="Success"){
+            setOpen(false)
+
+        }
+    }, [state.message]);
+
+    useEffect(() => {
         setTagsValueString("")
-        tags.map((t,index)=>
-            setTagsValueString(tagsValueString+","+t)
-        );
+        tags.map((t,index)=> {
+            if (tagsValueString !== "")
+                setTagsValueString(tagsValueString + "," + t)
+            else
+                setTagsValueString(t)
+        });
     },[tags])
 
     const addToTags = (e:any)=>{
@@ -40,7 +55,7 @@ export default function AddJobDialog(){
         setTag('')
     }
     return (
-        <Dialog.Root>
+        <Dialog.Root  open={open} onOpenChange={setOpen}>
             <Dialog.Trigger>
                 <Button variant="soft">
                     <PlusIcon /> Add New Site
@@ -105,8 +120,7 @@ export default function AddJobDialog(){
                             Cancel
                         </Button>
                     </Dialog.Close>
-
-                    <Button type={"submit"}>Confirm</Button>
+                    <SubmitButton name={"Confirm"}/>
                 </Flex>
                 </Form>
             </Dialog.Content>

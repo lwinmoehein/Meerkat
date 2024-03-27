@@ -1,8 +1,6 @@
-
 import '@radix-ui/themes/styles.css'
 import {getJobs} from "@/app/lib/actions";
-import {Box, Dialog, TextField, Flex, Grid, Heading, Text, Card, Button, Badge} from "@radix-ui/themes";
-import {PlusIcon} from "@radix-ui/react-icons";
+import {Badge, Box, Card, Flex, Grid, Heading, Text} from "@radix-ui/themes";
 import AddJobDialog from "@/components/job/add-job-dialog";
 
 

@@ -5,6 +5,7 @@ import axios from 'axios';
 import {redirect} from "next/navigation";
 import jwt from 'next-auth/jwt'
 import {cookies} from "next/headers";
+import {revalidatePath} from "next/cache";
 
 
 export type RegisterState = {
@@ -86,7 +87,7 @@ export async function createJob(prevState: CreateJobState, formData: FormData):P
                     'Authorization':`Bearer ${token?.value}`
                 }
             })
-        if(response.status!==201){
+        if(response.status!==204){
             return {
                 message: 'Error adding a new site.'
             };
@@ -96,8 +97,9 @@ export async function createJob(prevState: CreateJobState, formData: FormData):P
             message: 'Error adding a new site.'
         };
     }
+    revalidatePath('/');
     return {
-        message: 'Error adding a new site.'
+        message: 'Success'
     };
 }
 
