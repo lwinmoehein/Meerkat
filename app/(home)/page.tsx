@@ -1,5 +1,5 @@
 import '@radix-ui/themes/styles.css'
-import {deleteJob, getJobs} from "@/app/lib/actions";
+import {deleteJob, getJobs, getUser} from "@/app/lib/actions";
 import {Badge, Box, Button, Card, DropdownMenu, Flex, Grid, Heading, Text} from "@radix-ui/themes";
 import AddJobDialog from "@/components/job/add-job-dialog";
 import {DotsVerticalIcon, InfoCircledIcon, Pencil1Icon, TrashIcon} from "@radix-ui/react-icons";
@@ -8,14 +8,15 @@ import JobItem from "@/components/job/job-item";
 
 export default async function Page() {
     const jobs = await getJobs()
+    const user = await getUser()
 
   return(
       <Box  p={"2"}>
                   <Flex justify={'between'}>
-                      <Heading mb={"4"}>
+                      <Text weight={'bold'} mb={"4"}>
                           Web Pages
-                      </Heading>
-                      <AddJobDialog/>
+                      </Text>
+                      <AddJobDialog user={user}/>
                   </Flex>
                   {jobs&&jobs.length>0&& <Grid columns={{initial:'1',md:'3'}} gap="5"  width="auto">
                       {jobs&& jobs.map((job,index)=>

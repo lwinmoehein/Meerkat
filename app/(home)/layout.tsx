@@ -8,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <Flex p={'5'} direction={'column'}>
+      <Flex p={{'initial':'3','md':'5'}} direction={'column'}>
           <Box mb={'5'}>
               <NavBar/>
           </Box>

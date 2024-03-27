@@ -9,7 +9,7 @@ import {createJob} from "@/app/lib/actions";
 import {SubmitButton} from "@/components/submit-button";
 
 
-export default function AddJobDialog(){
+export default function AddJobDialog({user}:{user:User|null}){
 
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(createJob, initialState);
@@ -67,6 +67,7 @@ export default function AddJobDialog(){
                 <Dialog.Title>Add New Web Page</Dialog.Title>
                 <Dialog.Description size="2" mb="4">
                     Add a new web page to watch changes and get notified.
+                    When there are changes related to this job's tags , we will send email to <Text color={'sky'}> {user?.email}</Text>
                 </Dialog.Description>
                 <Form action={dispatch}>
                 <Flex direction="column" gap="3">
