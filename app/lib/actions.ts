@@ -193,6 +193,22 @@ export async function getJobs(){
         return null;
     }
 }
+
+export async function deleteJob(jobId:string){
+    try{
+        const token = cookies().get("access_token")
+
+        const { data,status } = await axios.delete(`${process.env.API_URL}/jobs/${jobId}`,{
+            headers:{
+                'Authorization':`Bearer ${token?.value}`
+            }
+        })
+
+    }catch (error) {
+
+    }
+    revalidatePath("/")
+}
 export async function getToken(){
     const token = cookies().get("access_token")
     return token?.value
