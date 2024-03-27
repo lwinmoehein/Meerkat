@@ -1,6 +1,6 @@
 "use client";
 
-import {Badge, Box, Card, DropdownMenu, Flex, Text} from "@radix-ui/themes";
+import {Badge, Box, Card, DropdownMenu, Flex, Link, Separator, Text} from "@radix-ui/themes";
 import {CheckCircledIcon, DotsVerticalIcon, MinusCircledIcon, TrashIcon} from "@radix-ui/react-icons";
 import {deleteJob} from "@/app/lib/actions";
 
@@ -41,15 +41,19 @@ export default function JobItem({job}:{job:Job}){
                             <MinusCircledIcon/>
                         </Flex>
                     )}
+                    <Badge>{job.last_tag_count} Tag Matches</Badge>
                     <Text mt={'3'} as="div" size="2" color="gray">
-                        {job.url}
+                        <Link href={job.url}>{job.url}</Link>
                     </Text>
                     <Text as="div" mt={'5'} size="1" color="gray" weight={'bold'}>
                         Tags
                     </Text>
-                    <Flex gap={'2'} mt={'3'}>
+                    <Flex mt={'3'} gap="3" align="center">
                         {job.tags&&job.tags.map((tag,index)=>(
-                            <Badge key={index}>{tag}</Badge>
+                            <>
+                                {tag}
+                                {index!==job.tags.length-1&&<Separator orientation="vertical" />}
+                            </>
                         ))}
                     </Flex>
                 </Box>
