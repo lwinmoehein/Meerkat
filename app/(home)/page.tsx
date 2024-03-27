@@ -1,7 +1,8 @@
 import '@radix-ui/themes/styles.css'
 import {getJobs} from "@/app/lib/actions";
-import {Badge, Box, Card, Flex, Grid, Heading, Text} from "@radix-ui/themes";
+import {Badge, Box, Button, Card, DropdownMenu, Flex, Grid, Heading, Text} from "@radix-ui/themes";
 import AddJobDialog from "@/components/job/add-job-dialog";
+import {DotsVerticalIcon, Pencil1Icon, TrashIcon} from "@radix-ui/react-icons";
 
 
 export default async function Page() {
@@ -11,18 +12,35 @@ export default async function Page() {
       <Box  p={"2"}>
                   <Flex justify={'between'}>
                       <Heading mb={"4"}>
-                          Jobs
+                          Web Pages
                       </Heading>
                       <AddJobDialog/>
                   </Flex>
-                  <Grid columns={{initial:'1',md:'4'}} gap="3"  width="auto">
+                  <Grid columns={{initial:'1',md:'3'}} gap="5"  width="auto">
                       {jobs&& jobs.map((job,index)=>
                           <Card key={index}>
                               <Flex gap="3" align="center">
-                                  <Box>
-                                      <Text as="div" size="2" weight="bold">
-                                          {job.name}
-                                      </Text>
+                                  <Box width={'100%'}>
+                                      <Flex width={'100%'} justify={'between'}>
+                                          <Text as="div" size="2" weight="bold">
+                                              {job.name}
+                                          </Text>
+                                          <DropdownMenu.Root>
+                                              <DropdownMenu.Trigger>
+                                                  <DotsVerticalIcon/>
+                                              </DropdownMenu.Trigger>
+                                              <DropdownMenu.Content>
+                                                  <DropdownMenu.Item>
+                                                      Edit
+                                                      <Pencil1Icon/>
+                                                  </DropdownMenu.Item>
+                                                  <DropdownMenu.Item color="red">
+                                                      Delete
+                                                      <TrashIcon/>
+                                                  </DropdownMenu.Item>
+                                              </DropdownMenu.Content>
+                                          </DropdownMenu.Root>
+                                      </Flex>
                                       <Text as="div" size="2" color="gray">
                                           {job.url}
                                       </Text>
