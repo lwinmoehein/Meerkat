@@ -5,6 +5,8 @@ import {register} from "@/app/lib/actions";
 import { useFormState } from 'react-dom';
 import {Flex,Card,Heading,Box,Link,TextField,Button,Text} from "@radix-ui/themes";
 import {Form} from "@radix-ui/react-form";
+import {SubmitButton} from "@/components/submit-button";
+import {ArrowRightIcon} from "@radix-ui/react-icons";
 
 export default function RegisterForm() {
     const initialState = { message: null, errors: {} };
@@ -72,7 +74,9 @@ export default function RegisterForm() {
                <Link underline={"always"} href={"/login"}>
                        Sign In
                </Link>
-               <Button  variant={"soft"} type={"submit"} >Register</Button>
+               <SubmitButton name={'Register'}>
+                   <ArrowRightIcon/>
+               </SubmitButton>
            </Flex>
        </Card>
        </Box>

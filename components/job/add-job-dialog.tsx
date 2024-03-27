@@ -1,8 +1,8 @@
 "use client";
 
 import {Button, Box, Dialog, Flex, Text, TextField, Badge, Spinner} from "@radix-ui/themes";
-import {PlusIcon} from "@radix-ui/react-icons";
-import {useEffect, useState} from "react";
+import {ArrowRightIcon, CheckIcon, PlusIcon} from "@radix-ui/react-icons";
+import React, {useEffect, useState} from "react";
 import {Form} from "@radix-ui/react-form";
 import {useFormState} from "react-dom";
 import {createJob} from "@/app/lib/actions";
@@ -119,7 +119,9 @@ export default function AddJobDialog(){
                             Cancel
                         </Button>
                     </Dialog.Close>
-                    <SubmitButton name={"Confirm"}/>
+                    <SubmitButton name={'Confirm'}>
+                        <CheckIcon/>
+                    </SubmitButton>
                 </Flex>
                 </Form>
             </Dialog.Content>

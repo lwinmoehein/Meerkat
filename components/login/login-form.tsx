@@ -5,6 +5,8 @@ import {Flex,Card,Heading,Box,Link,TextField,Button,Text} from "@radix-ui/themes
 import {Form} from "@radix-ui/react-form";
 import {login} from '@/app/lib/actions';
 import {useFormState} from "react-dom";
+import {SubmitButton} from "@/components/submit-button";
+import {ArrowRightIcon} from "@radix-ui/react-icons";
 export default  function LoginForm() {
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(login, initialState);
@@ -54,7 +56,9 @@ export default  function LoginForm() {
                         <Link underline={"always"} href={"/register"}>
                             Register
                         </Link>
-                        <Button variant={"soft"} type={"submit"}>Login</Button>
+                        <SubmitButton name={'Login'}>
+                            <ArrowRightIcon/>
+                        </SubmitButton>
                     </Flex>
                 </Card>
             </Box>
