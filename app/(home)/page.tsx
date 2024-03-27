@@ -1,7 +1,7 @@
 
 import '@radix-ui/themes/styles.css'
 import {getJobs} from "@/app/lib/actions";
-import {Box,Dialog,TextField, Flex, Grid, Heading, Text, Card, Button} from "@radix-ui/themes";
+import {Box, Dialog, TextField, Flex, Grid, Heading, Text, Card, Button, Badge} from "@radix-ui/themes";
 import {PlusIcon} from "@radix-ui/react-icons";
 import AddJobDialog from "@/components/job/add-job-dialog";
 
@@ -28,6 +28,14 @@ export default async function Page() {
                                       <Text as="div" size="2" color="gray">
                                           {job.url}
                                       </Text>
+                                      <Text as="div" mt={'5'} size="1" color="gray" weight={'bold'}>
+                                          Tags
+                                      </Text>
+                                      <Flex gap={'2'} mt={'3'}>
+                                          {job.tags&&job.tags.map((tag,index)=>(
+                                              <Badge key={index}>{tag}</Badge>
+                                          ))}
+                                      </Flex>
                                   </Box>
                               </Flex>
                           </Card>

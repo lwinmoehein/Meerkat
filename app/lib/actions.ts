@@ -23,6 +23,15 @@ export type LoginState = {
     message?: string | null;
 };
 
+export type CreateJobState = {
+    errors?: {
+        name?: string[];
+        url?: string[];
+        tags?:string[];
+    };
+    message?: string | null;
+};
+
 const Register = z.object({
     name: z.string({
         invalid_type_error:"Please enter a valid user name."
@@ -43,6 +52,55 @@ const Login = z.object({
         invalid_type_error:"Please enter a valid password."
     })
 });
+
+const CreateJob = z.object({
+    name: z.string({
+        invalid_type_error:"Please enter a name for this site."
+    }),
+    url: z.string({
+        invalid_type_error:"Please enter a valid url."
+    }).url(),
+    tags: z.array(z.string())
+});
+
+export async function createJob(prevState: CreateJobState, formData: FormData):Promise<CreateJobState>{
+    const token = cookies().get("access_token")
+
+    const validatedFields = CreateJob.safeParse({
+        name: formData.get('name'),
+        url: formData.get('url'),
+        tags: formData.get('tags')?.toString().split(","),
+    });
+
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to add a new website.',
+        };
+    }
+    try{
+        const response = await axios.post(`${process.env.API_URL}/jobs`,validatedFields.data,
+            {
+                headers:{
+                    'Authorization':`Bearer ${token?.value}`
+                }
+            })
+        if(response.status!==201){
+            return {
+                message: 'Error adding a new site.'
+            };
+        }
+    }catch (error) {
+        return {
+            message: 'Error adding a new site.'
+        };
+    }
+    return {
+        message: 'Error adding a new site.'
+    };
+}
+
 
 export async function register(prevState: RegisterState, formData: FormData):Promise<RegisterState> {
 
