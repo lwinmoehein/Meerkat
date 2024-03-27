@@ -11,4 +11,9 @@ declare global {
         tags:string[]
         created_at:string
     }
+
+    interface User{
+        name:string,
+        email:string
+    }
 }

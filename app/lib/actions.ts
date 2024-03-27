@@ -213,7 +213,7 @@ export async function getToken(){
     const token = cookies().get("access_token")
     return token?.value
 }
-export async function getUser(){
+export async function getUser():Promise<User|null>{
     const user = cookies().get("user")
     return user==undefined?null:JSON.parse(user.value)
 }
