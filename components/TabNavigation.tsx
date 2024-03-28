@@ -6,8 +6,13 @@ import {HomeIcon} from "@radix-ui/react-icons";
 
 const links = [
     {
-        name: 'Sites',
+        name: 'Web Pages',
         href: '/',
+        icon: HomeIcon
+    },
+    {
+        name: 'Notifications',
+        href: '/notifications',
         icon: HomeIcon },
     {
         name: 'Settings',

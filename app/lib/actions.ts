@@ -194,6 +194,24 @@ export async function getJobs(){
     }
 }
 
+export async function getNotificationPagination(page:number=1){
+    try{
+        const token = cookies().get("access_token")
+
+        const { data,status } = await axios.get(`${process.env.API_URL}/notifications?page=${page}`,{
+            headers:{
+                'Authorization':`Bearer ${token?.value}`
+            }
+        })
+        if (status===200) {
+            const notificationPagination:NotificationPagination = data
+            return notificationPagination
+        }
+    }catch (error) {
+        return null;
+    }
+}
+
 export async function deleteJob(jobId:string){
     try{
         const token = cookies().get("access_token")
