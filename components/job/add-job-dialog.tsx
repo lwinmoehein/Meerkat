@@ -59,7 +59,7 @@ export default function AddJobDialog({user}:{user:User|null}){
         <Dialog.Root  open={open} onOpenChange={setOpen}>
             <Dialog.Trigger>
                 <Button variant="soft">
-                    <PlusIcon /> Add New Site
+                    <PlusIcon /> Add New Page
                 </Button>
             </Dialog.Trigger>
 

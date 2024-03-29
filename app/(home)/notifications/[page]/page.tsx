@@ -2,8 +2,9 @@ import '@radix-ui/themes/styles.css'
 import {Box, Card, Link, Flex, Text, Blockquote, Badge} from "@radix-ui/themes";
 import {getNotificationPagination} from "../../../lib/actions";
 import NotificationPaginator from "@/components/job/notification-paginator";
-import {BellIcon} from "@radix-ui/react-icons";
+import {BellIcon, InfoCircledIcon} from "@radix-ui/react-icons";
 import React from "react";
+import EmptyPlaceholder from "@/components/empty-placeholder";
 
 
 export default async function Page({ params }: { params: { page: number } }) {
@@ -20,7 +21,7 @@ export default async function Page({ params }: { params: { page: number } }) {
                 <Box maxWidth={{'initial':'100%','lg':'50%'}}>
                             <Flex>
                                 {
-                                    notificationsPagination&&<NotificationPaginator pagination={notificationsPagination}/>
+                                    notificationsPagination&&notificationsPagination.data.length>0&&<NotificationPaginator pagination={notificationsPagination}/>
                                 }
                             </Flex>
                            <Flex direction={'column'} gap={'2'}>
@@ -43,6 +44,9 @@ export default async function Page({ params }: { params: { page: number } }) {
                                    )
                                }
                            </Flex>
+                            {
+                                (notificationsPagination==null||notificationsPagination.data.length==0)&&<EmptyPlaceholder message={"No notifications were found."}/>
+                            }
                 </Box>
         </Flex>
     )

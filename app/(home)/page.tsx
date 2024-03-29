@@ -4,6 +4,7 @@ import {Badge, Box, Button, Card, DropdownMenu, Flex, Grid, Heading, Text} from 
 import AddJobDialog from "@/components/job/add-job-dialog";
 import {DotsVerticalIcon, InfoCircledIcon, Pencil1Icon, TrashIcon} from "@radix-ui/react-icons";
 import JobItem from "@/components/job/job-item";
+import EmptyPlaceholder from "@/components/empty-placeholder";
 
 
 export default async function Page() {
@@ -25,15 +26,7 @@ export default async function Page() {
                   </Grid>}
 
                   {
-                      (jobs==null||jobs.length==0)&&
-                      <Card>
-                          <Flex minHeight={'200px'} justify={'center'} align={'center'}>
-                              <Flex align={'center'} gap={'1'}>
-                                  <InfoCircledIcon/>
-                                  <Text>No web pages were created yet.</Text>
-                              </Flex>
-                          </Flex>
-                      </Card>
+                      (jobs==null||jobs.length==0)&&<EmptyPlaceholder message={"No web pages were added yet. Please click 'Add New Page' button to add one"}/>
                   }
               </Box>
   )
