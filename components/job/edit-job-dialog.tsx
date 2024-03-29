@@ -91,7 +91,6 @@ export default function EditJobDialog({job}:{job:Job}){
 
                 <Form action={dispatch}>
                 <Flex direction="column" gap="3">
-                    <pre>{JSON.stringify(state)}</pre>
                     <label>
                         <Flex justify={'between'}>
                             <Text as="div" size="2" mb="1" weight="bold">
