@@ -12,6 +12,7 @@ export default function JobItem({job}:{job:Job}){
         await deleteJob(job.id)
     }
 
+    const [isDropdownOpen,setIsDropdownOpen] = useState(false)
 
     return (
         <Card>
@@ -21,8 +22,8 @@ export default function JobItem({job}:{job:Job}){
                         <Text as="div" size="2" weight="bold">
                             {job.name}
                         </Text>
-                        <DropdownMenu.Root>
-                            <DropdownMenu.Trigger>
+                        <DropdownMenu.Root open={isDropdownOpen}>
+                            <DropdownMenu.Trigger onClick={()=>setIsDropdownOpen(true)}>
                                 <DotsVerticalIcon/>
                             </DropdownMenu.Trigger>
                             <DropdownMenu.Content>
@@ -32,22 +33,19 @@ export default function JobItem({job}:{job:Job}){
                                         <TrashIcon/>
                                     </Flex>
                                 </DropdownMenu.Item>
-                                <EditJobDialog job={job}/>
+                                <EditJobDialog job={job} onEditClick={()=>setIsDropdownOpen(false)}/>
                             </DropdownMenu.Content>
                         </DropdownMenu.Root>
                     </Flex>
-                    {job.is_active&&(
-                        <Flex gap={'1'} justify={'start'} align={'center'}>
+                    {job.is_active?<Flex gap={'1'} justify={'start'} align={'center'}>
                             <Text color={'green'} size={'1'}>Active</Text>
                             <CheckCircledIcon color={'#46A758'}/>
-                        </Flex>
-                    )}
-                    {!job.is_active&&(
+                        </Flex>:
                         <Flex gap={'1'} justify={'start'} align={'center'}>
-                            <Text color={'green'} size={'1'}>Inactive</Text>
+                            <Text color={'gray'} size={'1'}>Inactive</Text>
                             <MinusCircledIcon/>
                         </Flex>
-                    )}
+                    }
                     <Badge>{job.last_tag_count} Tag Matches</Badge>
                     <Text mt={'3'} as="div" size="2" color="gray">
                         <Link href={job.url}>{job.url}</Link>

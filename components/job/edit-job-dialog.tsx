@@ -20,7 +20,7 @@ import { updateJob} from "@/app/lib/actions";
 import {SubmitButton} from "@/components/submit-button";
 
 
-export default function EditJobDialog({job}:{job:Job}){
+export default function EditJobDialog({job,onEditClick}:{job:Job,onEditClick:()=>void}){
 
     const initialState = { message: null, errors: {} };
 
@@ -43,6 +43,7 @@ export default function EditJobDialog({job}:{job:Job}){
     useEffect(() => {
         if(state.message==="Success"){
             setOpen(false)
+            onEditClick()
             setTags([])
         }
     }, [state.message]);
