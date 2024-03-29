@@ -6,6 +6,7 @@ import {redirect} from "next/navigation";
 import jwt from 'next-auth/jwt'
 import {cookies} from "next/headers";
 import {revalidatePath} from "next/cache";
+import {Update} from "next/dist/build/swc";
 
 
 export type RegisterState = {
@@ -29,6 +30,15 @@ export type CreateJobState = {
         name?: string[];
         url?: string[];
         tags?:string[];
+    };
+    message?: string | null;
+};
+export type UpdateJobState = {
+    errors?: {
+        name?: string[];
+        url?: string[];
+        tags?:string[];
+        is_active?:string[]
     };
     message?: string | null;
 };
@@ -67,6 +77,20 @@ const CreateJob = z.object({
         required_error:"Invalid tags"
     })
 });
+const UpdateJob = z.object({
+    name: z.string({
+        invalid_type_error:"Invalid name",
+        required_error:"Invalid name"
+    }).min(3,"Invalid name").max(30,"Invalid name"),
+    url: z.string().url(
+        "Invalid URL"
+    ).max(255,"Invalid URL"),
+    tags: z.array(z.string().max(255,"Invalid tags"),{
+        invalid_type_error:"Invalid tags",
+        required_error:"Invalid tags"
+    }),
+    is_active:z.boolean()
+});
 
 export async function createJob(prevState: CreateJobState, formData: FormData):Promise<CreateJobState>{
     const token = cookies().get("access_token")
@@ -85,6 +109,45 @@ export async function createJob(prevState: CreateJobState, formData: FormData):P
     }
     try{
         const response = await axios.post(`${process.env.API_URL}/jobs`,validatedFields.data,
+            {
+                headers:{
+                    'Authorization':`Bearer ${token?.value}`
+                }
+            })
+        if(response.status!==204){
+            return {
+                message: 'Error adding a new site.'
+            };
+        }
+    }catch (error) {
+        return {
+            message: 'Error adding a new site.'
+        };
+    }
+    revalidatePath('/');
+    return {
+        message: 'Success'
+    };
+}
+
+export async function updateJob(prevState: UpdateJobState, formData: FormData):Promise<UpdateJobState>{
+    const token = cookies().get("access_token")
+
+    const validatedFields = UpdateJob.safeParse({
+        name: formData.get('name'),
+        url: formData.get('url'),
+        tags: formData.get('tags')?.toString().split(","),
+        is_active:formData.get('is_active')
+    });
+
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors
+        };
+    }
+    try{
+        const response = await axios.put(`${process.env.API_URL}/jobs/`,validatedFields.data,
             {
                 headers:{
                     'Authorization':`Bearer ${token?.value}`

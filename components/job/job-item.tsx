@@ -1,14 +1,18 @@
 "use client";
 
 import {Badge, Box, Card, DropdownMenu, Flex, Link, Separator, Text} from "@radix-ui/themes";
-import {CheckCircledIcon, DotsVerticalIcon, MinusCircledIcon, TrashIcon} from "@radix-ui/react-icons";
+import {CheckCircledIcon, DotsVerticalIcon, MinusCircledIcon, Pencil1Icon, TrashIcon} from "@radix-ui/react-icons";
 import {deleteJob} from "@/app/lib/actions";
+import EditJobDialog from "@/components/job/edit-job-dialog";
+import React, {useState} from "react";
 
 
 export default function JobItem({job}:{job:Job}){
     const removeJob = async ()=>{
         await deleteJob(job.id)
     }
+
+
     return (
         <Card>
             <Flex gap="3" align="center">
@@ -23,9 +27,12 @@ export default function JobItem({job}:{job:Job}){
                             </DropdownMenu.Trigger>
                             <DropdownMenu.Content>
                                 <DropdownMenu.Item onClick={removeJob} color="red">
-                                    Delete
-                                    <TrashIcon/>
+                                    <Flex width={'100%'} justify={'between'} align={'center'}>
+                                        <Text>Delete</Text>
+                                        <TrashIcon/>
+                                    </Flex>
                                 </DropdownMenu.Item>
+                                <EditJobDialog job={job}/>
                             </DropdownMenu.Content>
                         </DropdownMenu.Root>
                     </Flex>
