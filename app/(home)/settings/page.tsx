@@ -36,7 +36,7 @@ export default async function Page() {
                                <DataList.Item>
                                    <DataList.Label minWidth="88px">Email</DataList.Label>
                                    <DataList.Value>
-                                       {user.email}
+                                       {user?.email}
                                    </DataList.Value>
                                </DataList.Item>
                            </DataList.Root>

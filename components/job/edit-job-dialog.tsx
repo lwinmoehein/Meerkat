@@ -1,6 +1,17 @@
 "use client";
 
-import {Badge, Box, Button, Card, Dialog, DropdownMenu, Flex, Text, TextField} from "@radix-ui/themes";
+import {
+    Badge,
+    Box,
+    Button,
+    Card,
+    Dialog,
+    DropdownMenu,
+    Flex,
+    SegmentedControl,
+    Text,
+    TextField
+} from "@radix-ui/themes";
 import {CheckIcon, Pencil1Icon, PlusIcon, TrashIcon} from "@radix-ui/react-icons";
 import React, {useEffect, useState} from "react";
 import {Form} from "@radix-ui/react-form";
@@ -15,6 +26,7 @@ export default function EditJobDialog({job}:{job:Job}){
 
     const [state, dispatch] = useFormState(updateJob, initialState);
     const [open, setOpen] = useState(false);
+    const [isActive,setActive] = useState(job.is_active)
 
 
     const [tags,setTags] = useState<string[]>(job.tags)
@@ -57,7 +69,7 @@ export default function EditJobDialog({job}:{job:Job}){
         setTag('')
     }
     return (
-        <Dialog.Root>
+        <Dialog.Root  open={open} onOpenChange={setOpen}>
             <Dialog.Trigger>
                 <DropdownMenu.Item onSelect={e=>e.preventDefault()}>
                     <Flex width={'100%'} justify={'between'} align={'center'}>
@@ -67,16 +79,26 @@ export default function EditJobDialog({job}:{job:Job}){
                 </DropdownMenu.Item>
             </Dialog.Trigger>
             <Dialog.Content maxWidth="450px">
-                <Dialog.Title>Edit {job.name}</Dialog.Title>
+                <Dialog.Title>
+                    <Flex justify={'between'} align={'center'}>
+                        <Text>Edit {job.name}</Text>
+                        <SegmentedControl.Root size={'1'}  radius={'full'} defaultValue={isActive?"1":"0"}>
+                            <SegmentedControl.Item onClick={()=>setActive(true)} value={"1"}>Enabled</SegmentedControl.Item>
+                            <SegmentedControl.Item onClick={()=>setActive(false)} value={"0"}>Disabled</SegmentedControl.Item>
+                        </SegmentedControl.Root>
+                    </Flex>
+                </Dialog.Title>
+
                 <Form action={dispatch}>
                 <Flex direction="column" gap="3">
+                    <pre>{JSON.stringify(state)}</pre>
                     <label>
                         <Flex justify={'between'}>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Name
                             </Text>
-                            {state.errors?.name&&state.errors.name.map((error,index)=>
-                                <Text key={index} as="div" color={'red'} size="2" my="1" >
+                            {state.errors?.name && state.errors.name.map((error, index) =>
+                                <Text key={index} as="div" color={'red'} size="2" my="1">
                                     {error}
                                 </Text>
                             )}
@@ -87,9 +109,11 @@ export default function EditJobDialog({job}:{job:Job}){
                             name={'name'}
                             value={job.name}
                         />
+                        <input type={'hidden'} name={'id'} value={job.id}/>
+                        <input type={'hidden'} name={'is_active'} value={isActive?1:0}/>
                     </label>
                     <label>
-                        <Flex justify={'between'}>
+                    <Flex justify={'between'}>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 URL
                             </Text>

@@ -78,6 +78,7 @@ const CreateJob = z.object({
     })
 });
 const UpdateJob = z.object({
+    id:z.string(),
     name: z.string({
         invalid_type_error:"Invalid name",
         required_error:"Invalid name"
@@ -89,7 +90,7 @@ const UpdateJob = z.object({
         invalid_type_error:"Invalid tags",
         required_error:"Invalid tags"
     }),
-    is_active:z.boolean()
+    is_active:z.string()
 });
 
 export async function createJob(prevState: CreateJobState, formData: FormData):Promise<CreateJobState>{
@@ -133,11 +134,13 @@ export async function createJob(prevState: CreateJobState, formData: FormData):P
 export async function updateJob(prevState: UpdateJobState, formData: FormData):Promise<UpdateJobState>{
     const token = cookies().get("access_token")
 
-    const validatedFields = UpdateJob.safeParse({
-        name: formData.get('name'),
-        url: formData.get('url'),
-        tags: formData.get('tags')?.toString().split(","),
-        is_active:formData.get('is_active')
+    const validatedFields =
+        UpdateJob.safeParse({
+            id: formData.get('id'),
+            name: formData.get('name'),
+            url: formData.get('url'),
+            tags: formData.get('tags')?.toString().split(","),
+            is_active:formData.get('is_active')
     });
 
 
@@ -147,7 +150,7 @@ export async function updateJob(prevState: UpdateJobState, formData: FormData):P
         };
     }
     try{
-        const response = await axios.put(`${process.env.API_URL}/jobs/`,validatedFields.data,
+        const response = await axios.put(`${process.env.API_URL}/jobs/${validatedFields.data.id}`,validatedFields.data,
             {
                 headers:{
                     'Authorization':`Bearer ${token?.value}`
