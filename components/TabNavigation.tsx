@@ -12,7 +12,7 @@ const links = [
     },
     {
         name: 'Notifications',
-        href: '/notifications',
+        href: '/notifications/1',
         icon: HomeIcon },
     {
         name: 'Settings',

@@ -1,10 +1,12 @@
 import '@radix-ui/themes/styles.css'
 import {Box, Card, Link, Flex, Text} from "@radix-ui/themes";
-import {getNotificationPagination} from "../../lib/actions";
+import {getNotificationPagination} from "../../../lib/actions";
+import NotificationPaginator from "@/components/job/notification-paginator";
 
 
-export default async function Page() {
-    const notificationsPagination = await getNotificationPagination()
+export default async function Page({ params }: { params: { page: number } }) {
+    const notificationsPagination = await getNotificationPagination(params.page)
+
 
     return(
         <Flex direction={'column'} gap={'4'}  p={"2"}>
@@ -14,6 +16,11 @@ export default async function Page() {
                     </Text>
                 </Flex>
                 <Box maxWidth={{'initial':'100%','lg':'50%'}}>
+                            <Flex>
+                                {
+                                    notificationsPagination&&<NotificationPaginator pagination={notificationsPagination}/>
+                                }
+                            </Flex>
                            <Flex direction={'column'} gap={'2'}>
                                {
                                    notificationsPagination?.data&&notificationsPagination.data.map((notification:Notification)=>
