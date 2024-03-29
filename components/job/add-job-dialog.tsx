@@ -67,7 +67,7 @@ export default function AddJobDialog({user}:{user:User|null}){
                 <Dialog.Title>Add New Web Page</Dialog.Title>
                 <Dialog.Description size="2" mb="4">
                     Add a new web page to watch changes and get notified.
-                    When there are changes related to this job's tags , we will send email to <Text color={'sky'}> {user?.email}</Text>
+                    When there are changes related to this job&apos;s tags , we will send email to <Text color={'sky'}> {user?.email}</Text>
                 </Dialog.Description>
                 <Form action={dispatch}>
                 <Flex direction="column" gap="3">
