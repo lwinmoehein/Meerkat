@@ -14,7 +14,8 @@ declare global {
 
     interface User{
         name:string,
-        email:string
+        email:string,
+        notification:boolean
     }
     interface NotificationData{
         title:string,

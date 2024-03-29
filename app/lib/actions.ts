@@ -259,6 +259,10 @@ export async function getJobs(){
         return null;
     }
 }
+export async function updateUserSettings(user:User,isNotiEnabled:boolean){
+    user.notification = isNotiEnabled
+    cookies().set('user', JSON.stringify(user))
+}
 
 export async function getNotificationPagination(page:number=1){
     try{
@@ -292,6 +296,29 @@ export async function deleteJob(jobId:string){
 
     }
     revalidatePath("/")
+}
+
+export async function updateNotificationSetting(user:User,isEnabled:boolean){
+    try{
+        const token = cookies().get("access_token")
+
+        const { data,status } = await axios.put(`${process.env.API_URL}/auth/me`,
+            {
+                is_notifications_enabled:isEnabled
+            },
+            {
+            headers:{
+                'Authorization':`Bearer ${token?.value}`
+            }
+        })
+        if(status===204){
+            await updateUserSettings(user,isEnabled)
+        }
+
+    }catch (error) {
+
+    }
+    revalidatePath("/settings")
 }
 export async function getToken(){
     const token = cookies().get("access_token")
