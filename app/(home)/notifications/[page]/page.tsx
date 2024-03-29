@@ -1,7 +1,9 @@
 import '@radix-ui/themes/styles.css'
-import {Box, Card, Link, Flex, Text} from "@radix-ui/themes";
+import {Box, Card, Link, Flex, Text, Blockquote, Badge} from "@radix-ui/themes";
 import {getNotificationPagination} from "../../../lib/actions";
 import NotificationPaginator from "@/components/job/notification-paginator";
+import {BellIcon} from "@radix-ui/react-icons";
+import React from "react";
 
 
 export default async function Page({ params }: { params: { page: number } }) {
@@ -26,9 +28,16 @@ export default async function Page({ params }: { params: { page: number } }) {
                                    notificationsPagination?.data&&notificationsPagination.data.map((notification:Notification)=>
                                       <Card key={notification.id}>
                                           <Flex direction={'column'}>
-                                              <Text>{notification.data.job_name}</Text>
-                                              <Text>{notification.data.title}</Text>
-                                              <Link href={notification.data.job_url}>{notification.data.job_url}</Link>
+                                              <Flex mb={'2'} gap={'2'} justify={'start'} align={'center'}>
+                                                  <BellIcon/>
+                                                  <Text weight={'bold'}>{notification.data.job_name}</Text>
+                                                  <Badge>{notification.data.job_last_tag_count} Tag Matches</Badge>
+                                              </Flex>
+                                              <Text size={'2'}>
+                                                  {notification.data.title}</Text>
+                                              <Text>
+                                                  <Text size={'1'}>Page Link :</Text> <Link size={'1'} href={notification.data.job_url}>{notification.data.job_url}</Link>
+                                              </Text>
                                           </Flex>
                                       </Card>
                                    )
