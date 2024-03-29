@@ -6,9 +6,9 @@ export default async function EmptyPlaceholder({message}:{message:string}){
     return (
         <Card>
             <Flex minHeight={'200px'} justify={'center'} align={'center'}>
-                <Flex align={'center'} gap={'1'}>
-                    <InfoCircledIcon/>
-                    <Text>{message}</Text>
+                <Flex direction={{'initial':'column','md':'row'}} gap={{'initial':'3','md':'2'}} align={'center'}>
+                    <InfoCircledIcon fontSize={'5'}/>
+                    <Text size={'2'}>{message}</Text>
                 </Flex>
             </Flex>
         </Card>
