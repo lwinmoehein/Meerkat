@@ -331,4 +331,6 @@ export async function getUser():Promise<User|null>{
 export async function signOut(){
     cookies().set('access_token', "")
     cookies().set('user', JSON.stringify(""))
+
+    redirect("/login")
 }
