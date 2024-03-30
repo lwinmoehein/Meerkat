@@ -8,7 +8,7 @@ export default function RootLayout({
 }>) {
   return (
           <Section>
-              <Flex justify={"center"} align={"center"}>
+              <Flex p={{'initial':'3','md':'0'}} width={{'initial':'100%'}} justify={"center"} align={"center"}>
                   {children}
               </Flex>
           </Section>

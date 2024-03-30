@@ -26,7 +26,7 @@ export default async function Page() {
                   </Grid>}
 
                   {
-                      (jobs==null||jobs.length==0)&&<EmptyPlaceholder message={"No web pages were added yet. Please click 'Add New Page' button to add one"}/>
+                      (jobs==null||jobs.length==0)&&<EmptyPlaceholder message={"No web pages were added yet." }/>
                   }
               </Box>
   )
