@@ -1,6 +1,6 @@
 "use client";
 
-import {Button, DropdownMenu, Flex, Text} from "@radix-ui/themes";
+import {Box, Button, DropdownMenu, Flex, Text} from "@radix-ui/themes";
 import {ExitIcon, PersonIcon} from "@radix-ui/react-icons";
 import {signOut} from "@/app/lib/actions";
 import {redirect} from "next/navigation";
@@ -15,7 +15,9 @@ export async function Profile({user}:{user:User}){
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
                 <Button variant={'soft'}>
-                    <Text weight={'bold'}>{user?.name}</Text>
+                    <Box display={{'initial':'none','md':'block'}}>
+                        <Text weight={'bold'}>{user?.name}</Text>
+                    </Box>
                     <PersonIcon/>
                 </Button>
             </DropdownMenu.Trigger>
