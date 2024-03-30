@@ -12,7 +12,7 @@ export default  function LoginForm() {
     const [state, dispatch] = useFormState(login, initialState);
 
     return (
-        <Box width={{initial: '100vw', md: 'maxWidth'}}>
+        <Box p={'4'} minWidth={{initial: '100vw', md: '350px'}}>
             <Form action={dispatch}>
                     <Card size="4">
                         <Heading as="h3" size="6" trim="start" mb="5">
