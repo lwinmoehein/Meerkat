@@ -33,7 +33,7 @@ export default function JobItem({job}:{job:Job}){
                                         <TrashIcon/>
                                     </Flex>
                                 </DropdownMenu.Item>
-                                <EditJobDialog job={job} onEditClick={()=>setIsDropdownOpen(false)}/>
+                                <EditJobDialog job={job} closeDropDown={()=>setIsDropdownOpen(false)}/>
                             </DropdownMenu.Content>
                         </DropdownMenu.Root>
                     </Flex>

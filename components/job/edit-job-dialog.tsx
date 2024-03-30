@@ -20,7 +20,7 @@ import { updateJob} from "@/app/lib/actions";
 import {SubmitButton} from "@/components/submit-button";
 
 
-export default function EditJobDialog({job,onEditClick}:{job:Job,onEditClick:()=>void}){
+export default function EditJobDialog({job,closeDropDown}:{job:Job,closeDropDown:()=>void}){
 
     const initialState = { message: null, errors: {} };
 
@@ -42,11 +42,11 @@ export default function EditJobDialog({job,onEditClick}:{job:Job,onEditClick:()=
 
     useEffect(() => {
         if(state.message==="Success"){
-            setOpen(false)
-            onEditClick()
             setTags([])
+            closeDropDown()
         }
     }, [state.message]);
+
 
     useEffect(() => {
         setTagsValueString("")
@@ -69,8 +69,9 @@ export default function EditJobDialog({job,onEditClick}:{job:Job,onEditClick:()=
         )
         setTag('')
     }
+
     return (
-        <Dialog.Root  open={open} onOpenChange={setOpen}>
+        <Dialog.Root   open={open} onOpenChange={setOpen}>
             <Dialog.Trigger>
                 <DropdownMenu.Item onSelect={e=>e.preventDefault()}>
                     <Flex width={'100%'} justify={'between'} align={'center'}>
@@ -79,7 +80,7 @@ export default function EditJobDialog({job,onEditClick}:{job:Job,onEditClick:()=
                     </Flex>
                 </DropdownMenu.Item>
             </Dialog.Trigger>
-            <Dialog.Content maxWidth="450px">
+            <Dialog.Content aria-modal={false} maxWidth="450px">
                 <Dialog.Title>
                     <Flex justify={'between'} align={'center'}>
                         <Text>Edit {job.name}</Text>
@@ -177,7 +178,7 @@ export default function EditJobDialog({job,onEditClick}:{job:Job,onEditClick:()=
                 </Flex>
 
                 <Flex gap="3" mt="4" justify="center">
-                    <Dialog.Close>
+                    <Dialog.Close onClick={()=>closeDropDown()}>
                         <Button variant="soft" color="gray">
                             Cancel
                         </Button>
